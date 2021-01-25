@@ -25,7 +25,8 @@ from marshal import dumps, loads
 from hashlib import sha1
 
 # Import from xapian
-from xapian import Database, WritableDatabase, DB_CREATE, DB_OPEN, DB_BACKEND_CHERT
+from xapian import Database, WritableDatabase, DB_OPEN
+from xapian import DB_BACKEND_GLASS
 from xapian import Document, Query, QueryParser, Enquire
 from xapian import sortable_serialise, sortable_unserialise, TermGenerator
 
@@ -779,9 +780,7 @@ def make_catalog(uri, fields):
                 'name': Unicode(indexed=True), ...}
     """
     path = lfs.get_absolute_path(uri)
-    db = WritableDatabase(path, DB_BACKEND_CHERT)
-    # FIXME GLASS backend seems to be buggy
-    # db = WritableDatabase(path, DB_CREATE)
+    db = WritableDatabase(path, DB_BACKEND_GLASS)
     return Catalog(db, fields)
 
 
